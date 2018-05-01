@@ -1,0 +1,37 @@
+{
+  "name": "ales-instaphotos-bot",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "rm": "rm -rf dist",
+    "lint": "tslint -p tsconfig.json",
+    "start": "node dist/index.js",
+    "start:w": "nodemon dist/index.js",
+    "build": "tsc",
+    "build:w": "tsc --watch --sourceMap"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "jimp": "^0.2.28",
+    "request": "^2.85.0",
+    "telegraf": "github:telegraf/telegraf#feature/typings",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.7",
+    "@types/jimp": "^0.2.28",
+    "@types/request": "^2.47.0",
+    "@types/uuid": "^3.4.3",
+    "nodemon": "^1.17.3",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.3"
+  },
+  "now": {
+    "env": {
+      "BOT_TOKEN": "@bot_token",
+      "WEBHOOK_PATH": "@webhook_path"
+    }
+  }
+}
