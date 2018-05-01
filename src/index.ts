@@ -4,7 +4,6 @@ import {Config} from './config';
 import {BotSetup} from './bot-setup';
 
 import * as Telegraf from 'telegraf';
-import * as Telegram from 'telegraf/telegram';
 import * as chalk from 'chalk';
 
 
@@ -17,10 +16,9 @@ const config = Config.instance();
 
 // Create bot and telgram
 const bot: Tg<ContextMessageUpdate> = new Telegraf<ContextMessageUpdate>(config.getBotToken());
-const telegram = new Telegram(config.getBotToken(), {webhookReply: false});
 
 // Setup the bot commands & co
-BotSetup.setupBot(bot, telegram);
+BotSetup.setupBot(bot);
 
 
 // //////////////////////////////////////////////////

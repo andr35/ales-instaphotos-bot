@@ -34,7 +34,7 @@ export class BotSetup {
   private static readonly ASSETS_PATH = pathJoin(__dirname, '../assets/');
 
 
-  static setupBot(bot: Telegraf<ContextMessageUpdate>, telegram: Telegram) {
+  static setupBot(bot: Telegraf<ContextMessageUpdate>) {
 
     // Setup for groups
     (bot as any).telegram.getMe().then((botInfo) => {
@@ -76,7 +76,7 @@ export class BotSetup {
 
           const fileId = message.photo[message.photo.length - 1].file_id;
 
-          const photoInfo: {file_id: string; file_size: number; file_path: string} = await (telegram as any).getFile(fileId);
+          const photoInfo: {file_id: string; file_size: number; file_path: string} = await (bot as any).telegram.getFile(fileId);
           const inputPhotoPath = await this.downloadPhoto(photoInfo.file_path);
 
           const outPhotoBuffer = await this.photoEditor.editPhoto(inputPhotoPath);
