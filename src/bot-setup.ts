@@ -1,4 +1,4 @@
-import {Telegraf, ContextMessageUpdate, Telegram} from 'telegraf/typings';
+import {Telegraf, ContextMessageUpdate} from 'telegraf/typings';
 import {PhotoEditor} from './photo-editor';
 import {Config} from './config';
 import {join as pathJoin} from 'path';
