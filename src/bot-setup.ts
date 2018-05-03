@@ -34,7 +34,6 @@ export class BotSetup {
 
   // Get Photo Editor instance
   private static photoEditor = PhotoEditor.instance();
-  private static sticker: Buffer | null = null;
 
   private static readonly ASSETS_PATH = pathJoin(__dirname, '../assets/');
 
@@ -120,12 +119,8 @@ export class BotSetup {
 
   private static getSticker(): Buffer {
 
-    if (!this.sticker) {
-      const stikerNum = this.getRandomInt(1, 4);
-      this.sticker = readFileSync(pathJoin(this.ASSETS_PATH, `ab${stikerNum}.png`));
-    }
-
-    return this.sticker;
+    const stikerNum = this.getRandomInt(1, 4);
+    return readFileSync(pathJoin(this.ASSETS_PATH, `ab${stikerNum}.png`));
   }
 
   private static async downloadPhoto(filePath: string): Promise<Buffer> {
