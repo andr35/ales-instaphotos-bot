@@ -1,11 +1,11 @@
-import {Telegraf, ContextMessageUpdate} from 'telegraf/typings';
-import {PhotoEditor} from './photo-editor';
-import {Config} from './config';
-import {join as pathJoin} from 'path';
-
-import {get as httpGet} from 'request';
 import * as chalk from 'chalk';
 import {readFileSync} from 'fs';
+import {join as pathJoin} from 'path';
+import {get as httpGet} from 'request';
+import {ContextMessageUpdate, Telegraf} from 'telegraf/typings';
+import {Config} from './config';
+import {PhotoEditor} from './photo-editor';
+
 
 enum COMMAND {
   START = 'start',
@@ -22,6 +22,11 @@ const HELP_MSG = `
 Non devi fare niente.
 Aspetta solo che Ale posti una foto.
 `;
+
+const captions: string[] = [
+  'Avrà anche dei difetti!',
+  'Gelosissimo tipo!'
+];
 
 export class BotSetup {
 
@@ -82,7 +87,9 @@ export class BotSetup {
           const outPhotoBuffer = await this.photoEditor.editPhoto(inputPhotoPath);
 
           console.log(chalk.default.blue('Sending photo...'));
-          await replyWithPhoto({source: outPhotoBuffer, filename: 'edited.jpg'}, {caption: 'Avrà anche dei difetti!'});
+
+          const caption = captions[this.getRandomInt(0, captions.length - 1)];
+          await replyWithPhoto({source: outPhotoBuffer, filename: 'edited.jpg'}, {caption});
 
           await replyWithSticker({source: this.getSticker()});
         }
@@ -114,7 +121,8 @@ export class BotSetup {
   private static getSticker(): Buffer {
 
     if (!this.sticker) {
-      this.sticker = readFileSync(pathJoin(this.ASSETS_PATH, 'ab.png'));
+      const stikerNum = this.getRandomInt(1, 4);
+      this.sticker = readFileSync(pathJoin(this.ASSETS_PATH, `ab${stikerNum}.png`));
     }
 
     return this.sticker;
@@ -147,4 +155,7 @@ export class BotSetup {
     // Else -> do nothing
   }
 
+  private static getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 }
