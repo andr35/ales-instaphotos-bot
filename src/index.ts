@@ -1,10 +1,10 @@
-import {createServer} from 'http';
-import {Telegraf as Tg, ContextMessageUpdate} from 'telegraf/typings';
-import {Config} from './config';
-import {BotSetup} from './bot-setup';
-
-import * as Telegraf from 'telegraf';
 import * as chalk from 'chalk';
+import {createServer} from 'http';
+import * as TelegrafImport from 'telegraf';
+import {ContextMessageUpdate, Telegraf as Tg} from 'telegraf';
+import {BotSetup} from './bot-setup';
+import {Config} from './config';
+
 
 
 // //////////////////////////////////////////////////
@@ -13,9 +13,11 @@ import * as chalk from 'chalk';
 
 // Load config and Ports
 const config = Config.instance();
+// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa', Telegraf);
 
 // Create bot and telgram
-const bot: Tg<ContextMessageUpdate> = new Telegraf<ContextMessageUpdate>(config.getBotToken());
+const Telegraf: any = TelegrafImport as any;
+const bot: Tg<ContextMessageUpdate> = new Telegraf(config.getBotToken());
 
 // Setup the bot commands & co
 BotSetup.setupBot(bot);

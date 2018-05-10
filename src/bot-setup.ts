@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import {readFileSync} from 'fs';
 import {join as pathJoin} from 'path';
 import {get as httpGet} from 'request';
-import {ContextMessageUpdate, Telegraf} from 'telegraf/typings';
+import {ContextMessageUpdate, Telegraf} from 'telegraf';
 import {Config} from './config';
 import {PhotoEditor} from './photo-editor';
 
@@ -25,7 +25,8 @@ Aspetta solo che Ale posti una foto.
 
 const captions: string[] = [
   'Avrà anche dei difetti!',
-  'Gelosissimo tipo!'
+  'Gelosissimo tipo!',
+  'Rido.'
 ];
 
 export class BotSetup {
@@ -61,13 +62,14 @@ export class BotSetup {
 
     // Help message ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bot.command(COMMAND.HELP, (async ({replyWithMarkdown}: ContextMessageUpdate) => {
+
+    bot.command(COMMAND.HELP, [async ({replyWithMarkdown}: ContextMessageUpdate) => {
       try {
         await replyWithMarkdown(HELP_MSG);
       } catch (err) {
         this.printErr(COMMAND.HELP, err);
       }
-    }) as any);
+    }]);
 
 
     // Photo reply ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,9 +87,11 @@ export class BotSetup {
 
           const outPhotoBuffer = await this.photoEditor.editPhoto(inputPhotoPath);
 
-          console.log(chalk.default.blue('Sending photo...'));
 
           const caption = captions[this.getRandomInt(0, captions.length - 1)];
+
+          console.log(chalk.default.blue(`Sending photo... (caption: ${caption})`));
+
           await replyWithPhoto({source: outPhotoBuffer, filename: 'edited.jpg'}, {caption});
 
           await replyWithSticker({source: this.getSticker()});
@@ -136,7 +140,8 @@ export class BotSetup {
           return reject(new Error(`Status code is ${res.statusCode}`));
         }
 
-        resolve(new Buffer(res.body, 'binary'));
+        const buffer = Buffer.from(res.body, 'binary');
+        resolve(buffer);
       });
     });
   }
