@@ -26,7 +26,8 @@ Aspetta solo che Ale posti una foto.
 const captions: string[] = [
   'Avrà anche dei difetti!',
   'Gelosissimo tipo!',
-  'Rido.'
+  'Rido.',
+  'Mio migliore amico.'
 ];
 
 export class BotSetup {
