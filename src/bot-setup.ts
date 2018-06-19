@@ -27,7 +27,8 @@ const captions: string[] = [
   'Avrà anche dei difetti!',
   'Gelosissimo tipo!',
   'Rido.',
-  'Mio migliore amico.'
+  'Mio migliore amico.',
+  'Paura.'
 ];
 
 export class BotSetup {
